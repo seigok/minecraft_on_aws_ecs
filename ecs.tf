@@ -38,16 +38,40 @@ resource "aws_ecs_task_definition" "minecraft-on-ecs-task" {
             value = "TRUE"
           },
           {
-            name  = "TYPE"
-            value = "PAPER"
-          },
-          {
             name  = "MEMORY"
             value = var.aws-ecs-container-java-memory-heap
           },
+          {
+            name = "MAX_PLAYERS"
+            value = 3
+          },
+          {
+            name = "GAMEMODE"
+            value = "SURVIVAL"
+          },
+          {
+            name = "DIFFICULTY"
+            value = "EASY"
+          },
+          {
+            name = "ALLOW_CHEATS"
+            value = "TRUE"
+          },
+          {
+            name = "ONLINE-MODE"
+            value = "TRUE"
+          },
+          {
+            name = "LEVEL-NAME"
+            value = "WORLDS"
+          },
+          {
+            name = "DEFAULT-PLAYER-PERMISSION-LEVEL"
+            value = "OPERATOR"
+          }
         ]
         essential = true
-        image     = "itzg/minecraft-server:java16"
+        image     = "itzg/minecraft-bedrock-server"
         logConfiguration = {
           logDriver = "awslogs"
           options = {
@@ -67,9 +91,9 @@ resource "aws_ecs_task_definition" "minecraft-on-ecs-task" {
         name = "minecraft"
         portMappings = [
           {
-            containerPort = 25565
-            hostPort      = 25565
-            protocol      = "tcp"
+            containerPort = 19132
+            hostPort      = 19132
+            protocol      = "udp"
           },
         ]
       },
@@ -106,7 +130,7 @@ resource "aws_ecs_service" "minecraft-on-ecs-service" {
 
   load_balancer {
     container_name   = "minecraft"
-    container_port   = 25565
+    container_port   = 19132
     target_group_arn = aws_lb_target_group.minecraft-ecs-target.arn
   }
 

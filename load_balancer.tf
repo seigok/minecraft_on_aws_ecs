@@ -10,8 +10,8 @@ resource "aws_eip" "minecraft-global-ip" {
 resource "aws_lb_target_group" "minecraft-ecs-target" {
   target_type = "ip"
   name        = "minecraft-ecs"
-  protocol    = "TCP"
-  port        = 25565
+  protocol    = "UDP"
+  port        = 19132
   vpc_id      = aws_vpc.ecs-default.id
 
   health_check {
@@ -41,8 +41,8 @@ resource "aws_lb" "minecraft-lb" {
 
 resource "aws_lb_listener" "minecraft-lb" {
   load_balancer_arn = aws_lb.minecraft-lb.id
-  protocol          = "TCP"
-  port              = "25565"
+  protocol          = "UDP"
+  port              = "19132"
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.minecraft-ecs-target.arn
