@@ -16,6 +16,7 @@ resource "aws_lb_target_group" "minecraft-ecs-target" {
 
   health_check {
     protocol = "TCP"
+    port = "80"
   }
 
   tags = {

@@ -29,6 +29,25 @@ resource "aws_ecs_task_definition" "minecraft-on-ecs-task" {
   container_definitions = jsonencode(
     [
       {
+        name = "nginx"
+        image = "nginx:1.14"
+        logConfiguration = {
+          logDriver = "awslogs"
+          options = {
+            awslogs-region = "ap-northeast-1"
+            awslogs-stream-prefix = "nginx"
+            awslogs-group = "/ecs/example/rails-hello-nginx"
+          }
+        }
+        portMappings = [
+          {
+            containerPort = 80
+            hostPort = 80
+            protocol = "tcp"
+          }
+        ]
+      },
+      {
         command    = []
         cpu        = 0
         entryPoint = []
