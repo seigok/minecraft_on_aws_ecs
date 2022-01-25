@@ -26,6 +26,10 @@ resource "aws_subnet" "ecs-default" {
   timeouts {}
 }
 
+resource "aws_internet_gateway" "igw-minecraft" {
+  vpc_id = aws_vpc.ecs-default.id
+}
+
 resource "aws_security_group" "ecs-default" {
   description = "ECS Allowed Ports"
   vpc_id      = aws_vpc.ecs-default.id
