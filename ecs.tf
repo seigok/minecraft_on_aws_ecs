@@ -43,7 +43,7 @@ resource "aws_ecs_task_definition" "minecraft-on-ecs-task" {
           },
           {
             name = "MAX_PLAYERS"
-            value = 3
+            value = "3"
           },
           {
             name = "GAMEMODE"
