@@ -36,13 +36,13 @@ resource "aws_security_group" "ecs-default" {
         "0.0.0.0/0",
       ]
       description      = ""
-      from_port        = 25565
+      from_port        = 19132
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
-      protocol         = "tcp"
+      protocol         = "udp"
       security_groups  = []
       self             = false
-      to_port          = 25565
+      to_port          = 19132
     },
   ]
 
